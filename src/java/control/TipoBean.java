@@ -9,6 +9,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import model.dao.DaoTipo;
 import model.dao.entidades.Tipo;
 
@@ -27,6 +29,12 @@ public class TipoBean implements Serializable {
     public TipoBean() {
         this.lista = daoT.listaTipos();
     }
+    
+    public void salvarTipo() {
+        this.daoT.salvar(this.tipo);
+        this.lista = this.daoT.listaTipos();
+        mensagem("Aviso", "Cadastro realizado com sucesso");
+    }
 
     public List<Tipo> getLista() {
         return lista;
@@ -42,6 +50,11 @@ public class TipoBean implements Serializable {
 
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
+    }
+    
+    public void mensagem(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
 }

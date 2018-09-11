@@ -9,6 +9,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import model.dao.DaoLivro;
 import model.dao.entidades.Assunto;
 import model.dao.entidades.Livro;
@@ -33,6 +35,20 @@ public class LivroBean implements Serializable {
         this.lista = daoL.listaLivros();
     }
 
+    public void salvarLivro() {
+        this.daoL.salvar(this.livro);
+        this.lista = this.daoL.listaLivros();
+        mensagem("Aviso", "Cadastro realizado com sucesso");
+    }
+    
+    public void editarLivro() {
+        this.livro = daoL.bucar(this.livro.getIdLivro(), Livro.class);
+    }
+
+    public void excluirLivro() {
+        this.daoL.remover(this.livro.getIdLivro(), Livro.class);  
+        this.lista = this.daoL.listaLivros();
+    }
 
     public Livro getLivro() {
         return livro;
@@ -64,5 +80,10 @@ public class LivroBean implements Serializable {
 
     public void setAssunto(Assunto assunto) {
         this.assunto = assunto;
+    }
+    
+    public void mensagem(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

@@ -6,36 +6,42 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>SGL: Sistema Gerenciador de Livros</title>
     </h:head>
     <h:body>
         <h:form>
             <br/>
             <p:fieldset legend="Livro">
                 <b:panelGrid col-spans="2,10" >
-                    <h:outputText value="Titulo"/> 
+                    <h:outputText value="Titulo"/>
                     <b:inputText value="#{livroBean.livro.titulo}"/>
-                    <h:outputText value="Autor(a)"/> 
+                    <h:outputText value="Autor(a)"/>
                     <b:inputText value="#{livroBean.livro.autor}" />
-                    <h:outputText value="Editora:"/> 
+                    <h:outputText value="Editora:"/>
                     <b:inputText/>
-                    <h:outputText value="Ano de publicação"/> 
+                    <h:outputText value="Ano de publicação"/>
                     <b:inputText value="#{livroBean.livro.ano}" mask="99/99/9999">
                         <f:convertDateTime pattern = "dd/MM/yyyy" dateStyle="short" type="date" />
                     </b:inputText>
-                    <h:outputText value="Cidade"/> 
+                    <h:outputText value="Cidade"/>
                     <b:inputText value="#{livroBean.livro.cidade}"  />
-                    <h:outputText value="Assunto"/> 
+                    <p:row>
+                        <h:outputText value="Assunto "/>
+                        <p:commandButton title="Adicionar novo" onclick="PF('cadAssunto').show();" icon="ui-icon-circle-plus" type="button" />
+                    </p:row>
                     <b:selectOneMenu value="#{livroBean.assunto}">
                         <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
                         <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="assunto" itemLabel="#{assunto.informacao}" />
                     </b:selectOneMenu>
-                    <h:outputText value="Tipo"/> 
+                    <p:row>
+                        <h:outputText value="Tipo "/>
+                        <p:commandButton title="Adicionar novo" onclick="PF('cadTipo').show();" icon="ui-icon-circle-plus" type="button" />
+                    </p:row>
                     <b:selectOneMenu value="#{livroBean.tipo}">
                         <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
                         <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="tipo" itemLabel="#{tipo.tipo}" />
                     </b:selectOneMenu>
-                    <h:outputText value="Resumo"/> 
+                    <h:outputText value="Resumo"/>
                     <b:inputTextarea value="#{livroBean.livro.resumo}" />
                 </b:panelGrid>
             </p:fieldset>
@@ -43,12 +49,40 @@
             <b:panelGrid columns="1">
                 <b:commandButton action="#{dividaBean.cadastrarDivida()}" value="Confirmar" look="success" />
             </b:panelGrid>
-        </h:form> 
+        </h:form>
+        <h:form>
+            <p:growl id="message" showDetail="true" />
+            <p:dialog header="Cadastrar novo assunto" widgetVar="cadAssunto" minHeight="40">
+                <b:panelGrid col-spans="2,10">
+                    <h:outputText value="Informação"/>
+                    <b:inputText value="#{assuntoBean.assunto.informacao}" size="50"/>
+                    <h:outputText value="Observação"/>
+                    <b:inputTextarea value="#{assuntoBean.assunto.observacao}" />
+                    <b:panelGrid columns="1">
+                        <b:commandButton action="#{assuntoBean.salvarAssunto()}"  value="Salvar" look="success" />
+                    </b:panelGrid>
+                </b:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form>       
+            <p:growl id="message" showDetail="true" />
+            <p:dialog header="Cadastrar novo tipo" widgetVar="cadTipo" minHeight="40">
+                <b:panelGrid col-spans="2,10">
+                    <h:outputText value="Tipo"/>
+                    <b:inputText value="#{tipoBean.tipo.tipo}" size="50"/>
+                    <h:outputText value="Descrição"/>
+                    <b:inputTextarea value="#{tipoBean.tipo.descricao}" />
+                    <b:panelGrid columns="1">
+                        <b:commandButton action="#{tipoBean.salvarTipo()}"  value="Salvar" look="success" />
+                    </b:panelGrid>
+                </b:panelGrid>
+            </p:dialog>
+        </h:form>
         <br/>
         <br/>
-        <p:dataTable id="tabela" value="#{livroBean.lista}" var="lista" 
-                     emptyMessage="Lista vazia." paginator="true" rows="10">                    
-            <f:facet name="header">  
+        <p:dataTable id="tabela" value="#{livroBean.lista}" var="lista"
+                     emptyMessage="Lista vazia." paginator="true" rows="10">
+            <f:facet name="header">
                 Lista de Livros
             </f:facet>
             <p:column headerText="ID" style="text-align: center">
@@ -68,8 +102,8 @@
             </p:column>
             <p:column headerText="Assunto" style="text-align: center">
                 <h:outputText value="#{lista.idAssunto}" />
-            </p:column>         
-        </p:dataTable>       
+            </p:column>
+        </p:dataTable>
     </h:body>
 </html>
 
