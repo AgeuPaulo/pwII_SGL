@@ -1,14 +1,75 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Página de boas-vindas do Primefaces" />
+        <h:form>
+            <br/>
+            <p:fieldset legend="Livro">
+                <b:panelGrid col-spans="2,10" >
+                    <h:outputText value="Titulo"/> 
+                    <b:inputText value="#{livroBean.livro.titulo}"/>
+                    <h:outputText value="Autor(a)"/> 
+                    <b:inputText value="#{livroBean.livro.autor}" />
+                    <h:outputText value="Editora:"/> 
+                    <b:inputText/>
+                    <h:outputText value="Ano de publicação"/> 
+                    <b:inputText value="#{livroBean.livro.ano}" mask="99/99/9999">
+                        <f:convertDateTime pattern = "dd/MM/yyyy" dateStyle="short" type="date" />
+                    </b:inputText>
+                    <h:outputText value="Cidade"/> 
+                    <b:inputText value="#{livroBean.livro.cidade}"  />
+                    <h:outputText value="Assunto"/> 
+                    <b:selectOneMenu value="#{livroBean.assunto}">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                        <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="assunto" itemLabel="#{assunto.informacao}" />
+                    </b:selectOneMenu>
+                    <h:outputText value="Tipo"/> 
+                    <b:selectOneMenu value="#{livroBean.tipo}">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                        <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="tipo" itemLabel="#{tipo.tipo}" />
+                    </b:selectOneMenu>
+                    <h:outputText value="Resumo"/> 
+                    <b:inputTextarea value="#{livroBean.livro.resumo}" />
+                </b:panelGrid>
+            </p:fieldset>
+            <br/>
+            <b:panelGrid columns="1">
+                <b:commandButton action="#{dividaBean.cadastrarDivida()}" value="Confirmar" look="success" />
+            </b:panelGrid>
+        </h:form> 
+        <br/>
+        <br/>
+        <p:dataTable id="tabela" value="#{livroBean.lista}" var="lista" 
+                     emptyMessage="Lista vazia." paginator="true" rows="10">                    
+            <f:facet name="header">  
+                Lista de Livros
+            </f:facet>
+            <p:column headerText="ID" style="text-align: center">
+                <h:outputText value="#{lista.idLivro}" />
+            </p:column>
+            <p:column headerText="Titulo" style="text-align: center">
+                <h:outputText value="#{lista.titulo}" />
+            </p:column>
+            <p:column headerText="Autor" style="text-align: center">
+                <h:outputText value="#{lista.autor}" />
+            </p:column>
+            <p:column headerText="Ano" style="text-align: center">
+                <h:outputText value="#{lista.ano}" />
+            </p:column>
+            <p:column headerText="Tipo" style="text-align: center">
+                <h:outputText value="#{lista.idTipo}" />
+            </p:column>
+            <p:column headerText="Assunto" style="text-align: center">
+                <h:outputText value="#{lista.idAssunto}" />
+            </p:column>         
+        </p:dataTable>       
     </h:body>
 </html>
 
