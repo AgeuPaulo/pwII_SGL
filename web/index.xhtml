@@ -9,7 +9,7 @@
         <title>SGL: Sistema Gerenciador de Livros</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="formulario">
             <br/>
             <p:fieldset legend="Livro">
                 <b:panelGrid col-spans="2,10" >
@@ -18,28 +18,29 @@
                     <h:outputText value="Autor(a)"/>
                     <b:inputText value="#{livroBean.livro.autor}" />
                     <h:outputText value="Editora:"/>
-                    <b:inputText/>
-                    <h:outputText value="Ano de publicação"/>
-                    <b:inputText value="#{livroBean.livro.ano}" mask="99/99/9999">
-                        <f:convertDateTime pattern = "dd/MM/yyyy" dateStyle="short" type="date" />
-                    </b:inputText>
+                    <b:inputText value="#{livroBean.livro.editora}"/>
+                    <h:outputText value="Data de publicação"/>
+                    <b:dateTimePicker value="#{livroBean.livro.ano}" 
+                                      mode="toggle-icon" 
+                                      showButtonPanel="true" 
+                                      format="DD/MM/YYYY"/>
                     <h:outputText value="Cidade"/>
                     <b:inputText value="#{livroBean.livro.cidade}"  />
                     <p:row>
                         <h:outputText value="Assunto "/>
                         <p:commandButton title="Adicionar novo" onclick="PF('cadAssunto').show();" icon="ui-icon-circle-plus" type="button" />
                     </p:row>
-                    <b:selectOneMenu value="#{livroBean.assunto}">
+                    <b:selectOneMenu value="#{livroBean.assunto}" converter="generic">
                         <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-                        <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="assunto" itemLabel="#{assunto.informacao}" />
+                        <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="#{assunto}" itemLabel="#{assunto.informacao}" />
                     </b:selectOneMenu>
                     <p:row>
                         <h:outputText value="Tipo "/>
                         <p:commandButton title="Adicionar novo" onclick="PF('cadTipo').show();" icon="ui-icon-circle-plus" type="button" />
                     </p:row>
-                    <b:selectOneMenu value="#{livroBean.tipo}">
+                    <b:selectOneMenu value="#{livroBean.tipo}" converter="generic">
                         <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-                        <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="tipo" itemLabel="#{tipo.tipo}" />
+                        <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="#{assunto}" itemLabel="#{tipo.tipo}" />
                     </b:selectOneMenu>
                     <h:outputText value="Resumo"/>
                     <b:inputTextarea value="#{livroBean.livro.resumo}" />
@@ -47,7 +48,7 @@
             </p:fieldset>
             <br/>
             <b:panelGrid columns="1">
-                <b:commandButton action="#{dividaBean.cadastrarDivida()}" value="Confirmar" look="success" />
+                <b:commandButton action="#{livroBean.salvarLivro()}" value="Confirmar" look="success" process="@form" update=":tabela" />
             </b:panelGrid>
         </h:form>
         <h:form>
@@ -94,14 +95,29 @@
             <p:column headerText="Autor" style="text-align: center">
                 <h:outputText value="#{lista.autor}" />
             </p:column>
+            <p:column headerText="Editora" style="text-align: center">
+                <h:outputText value="#{lista.editora}" />
+            </p:column>
             <p:column headerText="Ano" style="text-align: center">
-                <h:outputText value="#{lista.ano}" />
+                <h:outputText value="#{lista.ano}">
+                    <f:convertDateTime pattern="yyyy" />
+                </h:outputText>
             </p:column>
             <p:column headerText="Tipo" style="text-align: center">
-                <h:outputText value="#{lista.idTipo}" />
+                <h:outputText value="#{lista.idTipo.tipo}" />
             </p:column>
             <p:column headerText="Assunto" style="text-align: center">
-                <h:outputText value="#{lista.idAssunto}" />
+                <h:outputText value="#{lista.idAssunto.informacao}" />
+            </p:column>
+            <p:column  headerText="Ação" style="text-align: center">
+                <h:form>
+                    <p:commandButton actionListener="#{livroBean.excluirLivro()}" 
+                                     icon="ui-icon-trash" 
+                                     title="Remover" ajax="false" 
+                                     process="@form" update=":tabela">                          
+                        <f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
+                    </p:commandButton>
+                </h:form>
             </p:column>
         </p:dataTable>
     </h:body>

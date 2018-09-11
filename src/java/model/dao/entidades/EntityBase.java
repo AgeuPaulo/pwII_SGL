@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Ageeu
  */
-public interface EntityBase  extends Serializable {
+public interface EntityBase extends Serializable {
     
     public Long getId();
     

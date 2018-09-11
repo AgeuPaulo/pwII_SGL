@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Livro.findByIdLivro", query = "SELECT l FROM Livro l WHERE l.idLivro = :idLivro")
     , @NamedQuery(name = "Livro.findByTitulo", query = "SELECT l FROM Livro l WHERE l.titulo = :titulo")
     , @NamedQuery(name = "Livro.findByAutor", query = "SELECT l FROM Livro l WHERE l.autor = :autor")
+    , @NamedQuery(name = "Livro.findByEditora", query = "SELECT l FROM Livro l WHERE l.editora = :editora")
     , @NamedQuery(name = "Livro.findByAno", query = "SELECT l FROM Livro l WHERE l.ano = :ano")
     , @NamedQuery(name = "Livro.findByCidade", query = "SELECT l FROM Livro l WHERE l.cidade = :cidade")
     , @NamedQuery(name = "Livro.findByResumo", query = "SELECT l FROM Livro l WHERE l.resumo = :resumo")})
@@ -56,6 +57,11 @@ public class Livro implements EntityBase {
     @Size(min = 1, max = 80)
     @Column(name = "autor")
     private String autor;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "editora")
+    private String editora;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ano")
@@ -85,10 +91,11 @@ public class Livro implements EntityBase {
         this.idLivro = idLivro;
     }
 
-    public Livro(Long idLivro, String titulo, String autor, Date ano, String cidade, String resumo) {
+    public Livro(Long idLivro, String titulo, String autor, String editora, Date ano, String cidade, String resumo) {
         this.idLivro = idLivro;
         this.titulo = titulo;
         this.autor = autor;
+        this.editora = editora;
         this.ano = ano;
         this.cidade = cidade;
         this.resumo = resumo;
@@ -116,6 +123,14 @@ public class Livro implements EntityBase {
 
     public void setAutor(String autor) {
         this.autor = autor;
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
     }
 
     public Date getAno() {
@@ -185,7 +200,7 @@ public class Livro implements EntityBase {
 
     @Override
     public Long getId() {
-        return idLivro;
+       return idLivro;
     }
     
 }
