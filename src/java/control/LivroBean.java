@@ -36,23 +36,22 @@ public class LivroBean implements Serializable {
     }
 
     public void salvarLivro() {
-        this.livro.setIdAssunto(assunto);
-        this.livro.setIdTipo(tipo);
-        this.daoL.salvar(this.livro);
-        this.lista = this.daoL.listaLivros();
+       livro.setIdAssunto(assunto);
+        livro.setIdTipo(tipo);
+        daoL.salvar(livro);
+        lista = daoL.listaLivros();
         
-        this.livro = new Livro();
-        
-        mensagem("Aviso", "Cadastro realizado com sucesso");
+        mensagem("Aviso", "Cadastro realizado com sucesso");    
     }
     
     public void editarLivro() {
-        this.livro = daoL.bucar(this.livro.getIdLivro(), Livro.class);
+        livro = daoL.bucar(livro.getIdLivro(), Livro.class);
     }
 
-    public void excluirLivro() {
-        this.daoL.remover(this.livro.getIdLivro(), Livro.class);  
-        this.lista = this.daoL.listaLivros();
+   public void excluirLivro() {
+        daoL.remover(livro.getIdLivro(), Livro.class); 
+        
+        this.lista = daoL.listaLivros();
     }
 
     public Livro getLivro() {

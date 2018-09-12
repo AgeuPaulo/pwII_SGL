@@ -1,125 +1,43 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      dir="ltr" >
+    <h:head> 
         <title>SGL: Sistema Gerenciador de Livros</title>
+        <meta name="author" content="Ageu Paulo Santana" />
+        <style>
+           #texto{
+                text-align: justify;
+            }
+        </style>    
     </h:head>
-    <h:body>
-        <h:form id="formulario">
-            <br/>
-            <p:fieldset legend="Livro">
-                <b:panelGrid col-spans="2,10" >
-                    <h:outputText value="Titulo"/>
-                    <b:inputText value="#{livroBean.livro.titulo}"/>
-                    <h:outputText value="Autor(a)"/>
-                    <b:inputText value="#{livroBean.livro.autor}" />
-                    <h:outputText value="Editora:"/>
-                    <b:inputText value="#{livroBean.livro.editora}"/>
-                    <h:outputText value="Data de publicação"/>
-                    <b:dateTimePicker value="#{livroBean.livro.ano}" 
-                                      mode="toggle-icon" 
-                                      showButtonPanel="true" 
-                                      format="DD/MM/YYYY"/>
-                    <h:outputText value="Cidade"/>
-                    <b:inputText value="#{livroBean.livro.cidade}"  />
-                    <p:row>
-                        <h:outputText value="Assunto "/>
-                        <p:commandButton title="Adicionar novo" onclick="PF('cadAssunto').show();" icon="ui-icon-circle-plus" type="button" />
-                    </p:row>
-                    <b:selectOneMenu value="#{livroBean.assunto}" converter="generic">
-                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-                        <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="#{assunto}" itemLabel="#{assunto.informacao}" />
-                    </b:selectOneMenu>
-                    <p:row>
-                        <h:outputText value="Tipo "/>
-                        <p:commandButton title="Adicionar novo" onclick="PF('cadTipo').show();" icon="ui-icon-circle-plus" type="button" />
-                    </p:row>
-                    <b:selectOneMenu value="#{livroBean.tipo}" converter="generic">
-                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-                        <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="#{assunto}" itemLabel="#{tipo.tipo}" />
-                    </b:selectOneMenu>
-                    <h:outputText value="Resumo"/>
-                    <b:inputTextarea value="#{livroBean.livro.resumo}" />
-                </b:panelGrid>
-            </p:fieldset>
-            <br/>
-            <b:panelGrid columns="1">
-                <b:commandButton action="#{livroBean.salvarLivro()}" value="Confirmar" look="success" process="@form" update=":tabela" />
-            </b:panelGrid>
-        </h:form>
-        <h:form>
-            <p:growl id="message" showDetail="true" />
-            <p:dialog header="Cadastrar novo assunto" widgetVar="cadAssunto" minHeight="40">
-                <b:panelGrid col-spans="2,10">
-                    <h:outputText value="Informação"/>
-                    <b:inputText value="#{assuntoBean.assunto.informacao}" size="50"/>
-                    <h:outputText value="Observação"/>
-                    <b:inputTextarea value="#{assuntoBean.assunto.observacao}" />
-                    <b:panelGrid columns="1">
-                        <b:commandButton action="#{assuntoBean.salvarAssunto()}"  value="Salvar" look="success" />
-                    </b:panelGrid>
-                </b:panelGrid>
-            </p:dialog>
-        </h:form>
-        <h:form>       
-            <p:growl id="message" showDetail="true" />
-            <p:dialog header="Cadastrar novo tipo" widgetVar="cadTipo" minHeight="40">
-                <b:panelGrid col-spans="2,10">
-                    <h:outputText value="Tipo"/>
-                    <b:inputText value="#{tipoBean.tipo.tipo}" size="50"/>
-                    <h:outputText value="Descrição"/>
-                    <b:inputTextarea value="#{tipoBean.tipo.descricao}" />
-                    <b:panelGrid columns="1">
-                        <b:commandButton action="#{tipoBean.salvarTipo()}"  value="Salvar" look="success" />
-                    </b:panelGrid>
-                </b:panelGrid>
-            </p:dialog>
-        </h:form>
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        <b:navBar brand="SGP: Sistema Gerenciador de Livros" brandHref="index.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:dropMenu value="Cadastros">
+                    <b:navLink value="Livros" href="faces/cadastroLivro.xhtml"></b:navLink>
+                </b:dropMenu>
+                <b:navLink value="Sobre" href="#"></b:navLink>
+                <b:navLink value="Contato" href="#"></b:navLink>  
+            </b:navbarLinks>
+        </b:navBar>
         <br/>
         <br/>
-        <p:dataTable id="tabela" value="#{livroBean.lista}" var="lista"
-                     emptyMessage="Lista vazia." paginator="true" rows="10">
-            <f:facet name="header">
-                Lista de Livros
-            </f:facet>
-            <p:column headerText="ID" style="text-align: center">
-                <h:outputText value="#{lista.idLivro}" />
-            </p:column>
-            <p:column headerText="Titulo" style="text-align: center">
-                <h:outputText value="#{lista.titulo}" />
-            </p:column>
-            <p:column headerText="Autor" style="text-align: center">
-                <h:outputText value="#{lista.autor}" />
-            </p:column>
-            <p:column headerText="Editora" style="text-align: center">
-                <h:outputText value="#{lista.editora}" />
-            </p:column>
-            <p:column headerText="Ano" style="text-align: center">
-                <h:outputText value="#{lista.ano}">
-                    <f:convertDateTime pattern="yyyy" />
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Tipo" style="text-align: center">
-                <h:outputText value="#{lista.idTipo.tipo}" />
-            </p:column>
-            <p:column headerText="Assunto" style="text-align: center">
-                <h:outputText value="#{lista.idAssunto.informacao}" />
-            </p:column>
-            <p:column  headerText="Ação" style="text-align: center">
-                <h:form>
-                    <p:commandButton actionListener="#{livroBean.excluirLivro()}" 
-                                     icon="ui-icon-trash" 
-                                     title="Remover" ajax="false" 
-                                     process="@form" update=":tabela">                          
-                        <f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
-                    </p:commandButton>
-                </h:form>
-            </p:column>
-        </p:dataTable>
+        <b:container>
+            <b:jumbotron>
+                <h1>Olá!</h1>
+                <p id="texto"> SGL é um sistema, usando JSF com JPA e frameworks como primefaces e bootsfaces, 
+                    um menu base em todas as telas usando template e arquivo de bundler para os textos de tela, 
+                    pensando na internacionalização do aplicativo.
+                </p> 
+                <br/>
+                <p><a class="btn btn-primary btn-lg" href="faces/cadastroLivro.xhtml">Cadastrar Livro</a></p>
+            </b:jumbotron>
+            <hr></hr>
+            <footer style="text-align: center;" >
+                <p>Sistema Gerenciador de Livros - Unit - © Ageu Paulo - 2018</p>
+            </footer>
+        </b:container>
     </h:body>
 </html>
-

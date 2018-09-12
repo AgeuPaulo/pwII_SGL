@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      dir="ltr" >
+    <h:head> 
+        <title>SGP</title>
+        <meta name="author" content="Ageu Paulo Santana" />
+    </h:head>
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        <b:navBar brand="SGP: Sistema Gerenciador de Livros" brandHref="index.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:dropMenu value="Cadastros">
+                    <b:navLink value="Livros" href="faces/cadastroLivro.xhtml"></b:navLink>
+                </b:dropMenu>
+                <b:navLink value="Sobre" href="#"></b:navLink>
+                <b:navLink value="Contato" href="#"></b:navLink>  
+            </b:navbarLinks>
+        </b:navBar>
+        <ui:insert name="conteudo"></ui:insert>
+        <hr></hr>
+        <footer style="text-align: center;">
+            <p>Sistema Gerenciador de Livros - Unit - © Ageu Paulo - 2018</p>
+        </footer>
+    </h:body>
+</html>
