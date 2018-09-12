@@ -7,7 +7,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>SGL: Cadastro de Livros</title>
+        <title>SGL: #{bundle.sistema}</title>
+        <meta name="author" content="Ageu Paulo Santana"></meta>
     </h:head>
     <h:body>
         <ui:composition template="./WEB-INF/template/modelo.xhtml">
@@ -19,68 +20,68 @@
                             <br/>
                             <p:fieldset legend="Livro">
                                 <b:panelGrid col-spans="2,10"  >
-                                    <h:outputText value="Titulo"/>
+                                    <h:outputText value="#{bundle.titulo}"/>
                                     <b:inputText value="#{livroBean.livro.titulo}"/>
-                                    <h:outputText value="Autor(a)"/>
+                                    <h:outputText value="#{bundle.autor}"/>
                                     <b:inputText value="#{livroBean.livro.autor}" />
-                                    <h:outputText value="Editora:"/>
+                                    <h:outputText value="#{bundle.editora}"/>
                                     <b:inputText value="#{livroBean.livro.editora}"/>
-                                    <h:outputText value="Data de publicação"/>
+                                    <h:outputText value="#{bundle.publicacao}"/>
                                     <b:dateTimePicker value="#{livroBean.livro.ano}" 
                                                       mode="toggle-icon" 
                                                       showButtonPanel="true" 
                                                       format="DD/MM/YYYY"/>
-                                    <h:outputText value="Cidade"/>
+                                    <h:outputText value="#{bundle.cidade}"/>
                                     <b:inputText value="#{livroBean.livro.cidade}"  />
                                     <p:row>
-                                        <h:outputText value="Assunto "/>
-                                        <p:commandButton title="Adicionar novo" onclick="PF('cadAssunto').show();" icon="ui-icon-plusthick" type="button" />
+                                        <h:outputText value="#{bundle.assunto}    "/>
+                                        <p:commandButton title="#{bundle.add}" onclick="PF('cadAssunto').show();" icon="ui-icon-plusthick" type="button" />
                                     </p:row>
                                     <b:selectOneMenu value="#{livroBean.assunto}" converter="generic">
-                                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="#{bundle.escolha}" itemValue="#{null}" />
                                         <f:selectItems value="#{assuntoBean.lista}" var="assunto" itemValue="#{assunto}" itemLabel="#{assunto.informacao}" />
                                     </b:selectOneMenu>
                                     <p:row>
-                                        <h:outputText value="Tipo "/>
-                                        <p:commandButton title="Adicionar novo" onclick="PF('cadTipo').show();" icon="ui-icon-plusthick" type="button" />
+                                        <h:outputText value="#{bundle.tipo}    "/>
+                                        <p:commandButton title="#{bundle.add}" onclick="PF('cadTipo').show();" icon="ui-icon-plusthick" type="button" />
                                     </p:row>
                                     <b:selectOneMenu value="#{livroBean.tipo}" converter="generic">
-                                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="#{bundle.escolha}" itemValue="#{null}" />
                                         <f:selectItems value="#{tipoBean.lista}" var="tipo" itemValue="#{assunto}" itemLabel="#{tipo.tipo}" />
                                     </b:selectOneMenu>
-                                    <h:outputText value="Resumo"/>
+                                    <h:outputText value="#{bundle.resumo}"/>
                                     <b:inputTextarea value="#{livroBean.livro.resumo}" />
                                 </b:panelGrid>
                             </p:fieldset>
                             <br/>
                             <b:panelGrid columns="1">
-                                <b:commandButton action="#{livroBean.salvarLivro()}" value="Confirmar" look="success" />
+                                <b:commandButton action="#{livroBean.salvarLivro()}" value="#{bundle.salvar}" look="success" />
                             </b:panelGrid>
                         </p:panel>
                     </h:form>
                     <h:form>
-                        <p:dialog header="Cadastrar novo assunto" widgetVar="cadAssunto" minHeight="40">
+                        <p:dialog header="#{bundle.criarnovo}" widgetVar="cadAssunto" minHeight="40">
                             <b:panelGrid col-spans="2,10">
-                                <h:outputText value="Informação"/>
+                                <h:outputText value="#{bundle.informacao}"/>
                                 <b:inputText value="#{assuntoBean.assunto.informacao}" size="50"/>
-                                <h:outputText value="Observação"/>
+                                <h:outputText value="#{bundle.observacao}"/>
                                 <b:inputTextarea value="#{assuntoBean.assunto.observacao}" />
                                 <b:panelGrid columns="1">
-                                    <b:commandButton action="#{assuntoBean.salvarAssunto()}"  value="Salvar" look="success" />
+                                    <b:commandButton action="#{assuntoBean.salvarAssunto()}"  value="#{bundle.salvar}" look="success" />
                                 </b:panelGrid>
                             </b:panelGrid>
                         </p:dialog>
                     </h:form>
                     <h:form>       
                         <p:growl id="message" showDetail="true" />
-                        <p:dialog header="Cadastrar novo tipo" widgetVar="cadTipo" minHeight="40">
+                        <p:dialog header="#{bundle.criarnovo}" widgetVar="cadTipo" minHeight="40">
                             <b:panelGrid col-spans="2,10">
-                                <h:outputText value="Tipo"/>
+                                <h:outputText value="#{bundle.tipo}"/>
                                 <b:inputText value="#{tipoBean.tipo.tipo}" size="50"/>
-                                <h:outputText value="Descrição"/>
+                                <h:outputText value="#{bundle.descricao}"/>
                                 <b:inputTextarea value="#{tipoBean.tipo.descricao}" />
                                 <b:panelGrid columns="1">
-                                    <b:commandButton action="#{tipoBean.salvarTipo()}"  value="Salvar" look="success" />
+                                    <b:commandButton action="#{tipoBean.salvarTipo()}"  value="#{bundle.salvar}" look="success" />
                                 </b:panelGrid>
                             </b:panelGrid>
                         </p:dialog>
@@ -88,75 +89,75 @@
                     <br/>
                     <h:form id="formulario">
                         <p:dataTable id="tabela" value="#{livroBean.lista}" var="lista"
-                                     emptyMessage="Lista vazia." paginator="true" rows="10">
+                                     emptyMessage="#{bundle.vazia}" paginator="true" rows="10">
                             <f:facet name="header">
-                                Lista de Livros
+                                #{bundle.listalivros}
                             </f:facet>
                             <p:column headerText="ID" style="text-align: center">
                                 <h:outputText value="#{lista.idLivro}" />
                             </p:column>
-                            <p:column headerText="Titulo" style="text-align: center; width: 25%;">
+                            <p:column headerText="#{bundle.titulo}" style="text-align: center; width: 25%;">
                                 <h:outputText value="#{lista.titulo}" />
                             </p:column>
-                            <p:column headerText="Autor" style="text-align: center; width: 15%;">
+                            <p:column headerText="#{bundle.autor}" style="text-align: center; width: 15%;">
                                 <h:outputText value="#{lista.autor}" />
                             </p:column>
-                            <p:column headerText="Editora" style="text-align: center">
+                            <p:column headerText="#{bundle.editora}" style="text-align: center">
                                 <h:outputText value="#{lista.editora}" />
                             </p:column>
-                            <p:column headerText="Ano" style="text-align: center">
+                            <p:column headerText="#{bundle.ano}" style="text-align: center">
                                 <h:outputText value="#{lista.ano}">
                                     <f:convertDateTime pattern="yyyy" />
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="Tipo" style="text-align: center">
+                            <p:column headerText="#{bundle.tipo}" style="text-align: center">
                                 <h:outputText value="#{lista.idTipo.tipo}" />
                             </p:column>
-                            <p:column headerText="Assunto" style="text-align: center; width: 15%;">
+                            <p:column headerText="#{bundle.assunto}" style="text-align: center; width: 15%;">
                                 <h:outputText value="#{lista.idAssunto.informacao}" />
                             </p:column>
-                            <p:column  headerText="Ação" style="text-align: center">
+                            <p:column  headerText="#{bundle.acao}" style="text-align: center">
                                 <h:form>
                                     <p:commandButton action="#{livroBean.excluirLivro()}" 
                                                      icon="ui-icon-trash" 
-                                                     title="Remover"
+                                                     title="#{bundle.remover}"
                                                      process="@form" update=":formulario:tabela">                          
                                         <f:setPropertyActionListener value="#{lista}" target="#{livroBean.livro}" />
                                     </p:commandButton>
-                                    <p:commandButton title="Visualizar" onclick="PF('viewLivro').show();" icon="ui-icon-document" type="button" >
+                                    <p:commandButton title="#{bundle.view}" onclick="PF('viewLivro').show();" icon="ui-icon-document" type="button" >
                                         <f:setPropertyActionListener value="#{lista}" target="#{livroBean.livro}" />
                                     </p:commandButton>
-                                    <p:dialog header="Visualizar Livro" widgetVar="viewLivro" width="800" height="450" minHeight="40">
+                                    <p:dialog header="#{bundle.viewlivro}" widgetVar="viewLivro" width="800" height="450" minHeight="40">
                                         <p:panel>
                                             <p:panelGrid style="margin-top:20px;">
                                                 <f:facet name="header">
                                                     <p:row>
-                                                        <p:column colspan="10">Dados do Livro</p:column>
+                                                        <p:column colspan="10">#{bundle.dados}</p:column>
                                                     </p:row>
                                                 </f:facet>
                                                 <p:row>
                                                     <p:column colspan="10" styleClass="ui-widget-header">
-                                                        <p align="center">Descrição</p>
+                                                        <p align="center">#{bundle.descricao}</p>
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Titulo</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.titulo}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.titulo}" />
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Autor(es)</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.autor}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.autor}" />
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="2" style="font-weight: bold;">Editora</p:column>
+                                                    <p:column colspan="2" style="font-weight: bold;">#{bundle.editora}</p:column>
                                                     <p:column colspan="4">
                                                         <h:outputText value="#{lista.editora}" />
                                                     </p:column>
-                                                    <p:column colspan="2" style="font-weight: bold;">Ano</p:column>
+                                                    <p:column colspan="2" style="font-weight: bold;">#{bundle.ano}</p:column>
                                                     <p:column colspan="2">
                                                         <h:outputText value="#{lista.ano}">
                                                             <f:convertDateTime pattern="yyyy" />
@@ -164,14 +165,14 @@
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Cidade</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.cidade}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.cidade}" />
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
                                                     <p:column colspan="10" styleClass="ui-widget-header">
-                                                        <p align="center">Resumo</p>
+                                                        <p align="center">#{bundle.resumo}</p>
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
@@ -181,34 +182,34 @@
                                                 </p:row>
                                                 <p:row>
                                                     <p:column colspan="10" styleClass="ui-widget-header">
-                                                        <p align="center">Assunto</p>
+                                                        <p align="center">#{bundle.assunto}</p>
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Informação</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.informacao}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.idAssunto.informacao}" />
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Observação</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.observacao}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.idAssunto.observacao}" />
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
                                                     <p:column colspan="10" styleClass="ui-widget-header">
-                                                        <p align="center">Tipo</p>
+                                                        <p align="center">#{bundle.tipo}</p>
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Tipo</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.tipo}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.idTipo.tipo}" />
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="4" style="font-weight: bold;">Descrição</p:column>
+                                                    <p:column colspan="4" style="font-weight: bold;">#{bundle.descricao}</p:column>
                                                     <p:column colspan="6">
                                                         <h:outputText value="#{lista.idTipo.descricao}" />
                                                     </p:column>
@@ -219,7 +220,7 @@
                                                     </p:column>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column colspan="10" style="text-align: center;" >Sistema Gerenciador de Livros <br/> Unit - © Ageu Paulo - 2018</p:column>
+                                                    <p:column colspan="10" style="text-align: center;" >#{bundle.sistema} <br/> Unit - © Ageu Paulo - 2018</p:column>
                                                 </p:row>
                                             </p:panelGrid>
                                         </p:panel>
